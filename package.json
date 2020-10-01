@@ -1,0 +1,22 @@
+{
+  "name": "mineswept",
+  "version": "1.0.0",
+  "description": "Base repository for MineSwept games.",
+  "main": "index.js",
+  "scripts": {
+    "test": "gamemode_survival"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kasmanian/MineSwept.git"
+  },
+  "keywords": [
+    "comp426"
+  ],
+  "author": "Felimon Holland, Justin Bryce Bautista, Kemani A. Simms",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kasmanian/MineSwept/issues"
+  },
+  "homepage": "https://github.com/Kasmanian/MineSwept#readme"
+}
