@@ -85,3 +85,16 @@ function clickCell(cell) {
         checkLevelCompletion();
     }
 }
+
+//turn mines into lava 
+//variable mao size 
+//start with gray boared 
+//only allowed to be moved a set distance
+//reveal a set distance
+//instead of numbers use textures 
+//be able to destroy walls
+//be able to mark blocks to warn of lava
+//lava spread 
+//spreads first then player can move
+//health system
+//add special items
