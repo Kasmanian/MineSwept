@@ -1,0 +1,41 @@
+.grid {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 25vh 75vh;
+}
+
+.title {
+    display: flex;
+    grid-row: 1;
+    grid-column: 1;
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+}
+
+.game {
+    grid-column: 1;
+    grid-row: 2/3;
+    background-color: lightblue;
+}
+
+#gridy {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#gridy TR TD {
+    border: 1px solid white;
+    background: #999999;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}
+
+#gridy TR TD.clicked {
+    background: #333333;
+}
+
+#gridy TR TD.mine {
+    background: #FF0000;
+}
