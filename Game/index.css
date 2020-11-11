@@ -1,0 +1,35 @@
+#play {
+    background-color: lightblue;
+    height: 90vh;
+}
+
+.title {
+    height: 10vh;
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#reset {
+    width: 50vw;
+    height: 5vh;
+    margin-left: 25vw;
+}
+
+.game {
+    text-align: center;
+    margin: 0;
+    display: grid;
+    background-color: lightblue;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+
+
+}
+
+.cell {
+    background-color: gray;
+    border-style: solid;
+
+}
