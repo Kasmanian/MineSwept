@@ -66,11 +66,13 @@ function generate(length) {
         for (var j = 0; j < length; j++) {
             
             index = index + 1
-            game.append(`<button class="cell" id="${index}">  ${index}</button>`)
+
+            game.append( `<div class="cell" id="${index}" > <button class="but" id="${index}">  ${index}</button></div>`)
+            //game.append(`<button class="cell" id="${index}">  ${index}</button>`)
         }
-        $(".cell").css("width", length + "vw" )
-        $(".cell").css("height", length + "vw" )
-        $(".cell").css("padding-top", ((5/2)/2)+ "vw" )
+        $(".cell").css("width", 100/length + "vw" )
+        $(".cell").css("height", 100/length + "vw" )
+        //$(".cell").css("padding-top", ((5/2)/2)+ "vw" )
     }
 
 }
