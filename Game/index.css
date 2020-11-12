@@ -36,8 +36,24 @@
     margin: 0;
 }
 
-.cell {
+.cobble {
     background-color: gray;
 
+}
 
+.hollow {
+    background-color: black;
+    color: white;
+}
+
+.player {
+    background-color: purple;
+}
+
+.lava {
+    background-color: red;
+}
+
+.special {
+    background-color: gold;
 }
