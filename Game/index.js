@@ -36,11 +36,13 @@ var otherList = []
 var hollowList = []
 //list of a spaces player can reach and move to
 var playerList= []
+//current player
+//is temp till random gen of player
+var player = 1
+var length = 10
+generate(length)
 
-
-generate(10)
-
-
+//clears grid
 function clearBoard() {
     game.empty()
     playerList= []
@@ -49,7 +51,7 @@ function clearBoard() {
     cobbleList = []
     LavaList = []
 }
-
+//generates new grid; calls createSpecial()
 function generate(length) {
     clearBoard()
     
@@ -84,9 +86,8 @@ function generate(length) {
   
     
 }
- //create an array of indexes of lava
-         //first 3/4 of length is lava 
-            //rest is other
+
+//creates all special blocks lava player items  calls SpawnPlayer()
 function createSpecial(length) {
  
     specialList = []
@@ -108,9 +109,14 @@ function createSpecial(length) {
            specialList.push(rand)
        }
     }
-    lavaList = specialList.slice(0, 2.5*length)
+    player = specialList[0]
+    lavaList = specialList.slice(1, 2.5*length)
     otherList = specialList.slice(2.5*length, 3*length + 1)
+    // console.log(specialList)
+    // console.log(lavaList)
+    // console.log(otherList)
     specialList.sort(function(a, b){return a-b})
+
     //create a list of cobble blocks
     for (var i = 0; i < cobbleList.length; i++) {
         for (var j = 0; j < specialList.length; j++) {
@@ -122,21 +128,60 @@ function createSpecial(length) {
         }
     }
     
-    //slice list or rands to other array
-
-    
-   // console.log(lavaList)
-    //console.log(otherList)
-    // console.log(cobbleList)
-    // console.log(specialList)
-    // console.log(cobbleList.concat(specialList).sort(function(a, b){return a-b}))
+SpawnPlayer()
      
 }
 
+//spawn player and surround him with lava
+function SpawnPlayer() {
+    console.log(player)
+    //spawn
+    cobbleList.push(player)
+    removeCobble(player)
+    placePlayer(player)
+    //for each left right up down around player make sure its not lava 
+
+    adjacents(player).forEach(id=> {
+        lavaList.forEach(x=> {
+            if(id ==  x) {
+                removeLava(x)
+                placeCobble(x)
+                console.log("pre lava removed at " + x)
+
+            }
+        })
+    })
+}
+//get adjacents 
+function adjacents(id)  {
+    arr = []
+    if (id%length != 1 ) {
+        left = id-1
+        arr.push(left)
+    }
+    if(id >length) {
+        up = id-length
+        arr.push(up)
+    }
+    if(id%length != 0 ) {
+        right = id+1
+        arr.push(right)
+    }
+    if(id <= ((length*length) - length)) {
+        down = id+length
+        arr.push(down)
+    }
+    return arr
+
+}
+
+
+//button listener and calls checkListRemove
 function pressBut(event) {
+    console.log("but")
     id = event.target.id
-  parent = game.find("#"+ id)
-  parent.empty()
+//make a distance check
+
   //check list for whats in it  and append
  checkList(id)
  
@@ -145,43 +190,129 @@ function pressBut(event) {
 
 function checkList(id) {
     parent = game.find("#"+ id)
+   
+    hollowList.forEach(x=> {
+        
+        if(id ==  x) {
+            console.log("hollow")
+            removePlayer()
+            placeHollow(player)
+            removeHollow(x)
+            placePlayer(x)
+              
+        }
+    })
     lavaList.forEach(x=> {
         if(id ==  x) {
-            //intiate spread to other open spaces aswell
-            parent.append(`<button class="but lava" id="${x}">  ${x}</button>`) 
-            return
+            console.log("lava")
+            removeCobble(x)
+            placeLava(x)
         }
     })
 
     cobbleList.forEach(x=> {
         if(id ==  x) {
-            //remove block aswell
-              parent.append(`<button class="but hollow" id="${x}">  ${x}</button>`)
-              return
+            removeCobble(x)
+            placeHollow(x)
         }
     })
 
     otherList.forEach(x=> {
         if(id ==  x) {
-            //remove block aswell
-              parent.append(`<button class="but special" id="${x}">  ${x}</button>`)
-              return
+            removeCobble(x)
+            placeSpecial(x)
         }
     })
 
-    hollowList.forEach(x=> {
-        
-        if(id ==  x) {
-            console.log("here")
-            //replace player with hollow  
-              parent.append(`<button class="but hollow player" id="${x}">  ${x}</button>`)
-              return
-        }
-    })
+
 }
 
 
 
+function removeCobble(id){
+    
+    //remove from list and from screen
+    for (var i = 0; i < cobbleList.length; i++) {
+        if (cobbleList[i] == id) {
+            cobbleList.splice(i, 1)
+
+        }
+    }
+    parent = game.find("#"+ id)
+    parent.empty()
+
+}
+function removeHollow(id){
+    //remove from list and from screen
+    for (var i = 0; i < hollowList.length; i++) {
+        if (hollowList[i] == id) {
+            hollowList.splice(i, 1)
+            parent = game.find("#"+ id)
+            parent.empty()
+        }
+    }
+
+}
+function removeLava(id){
+    //remove from list and from screen
+    for (var i = 0; i < lavaList.length; i++) {
+        if (lavaList[i] == id) {
+            lavaList.splice(i, 1)
+            parent = game.find("#"+ id)
+            parent.empty()
+        }
+    }
+
+}
+
+function removeSpecial(id){
+    //remove from list and from screen
+    for (var i = 0; i < otherList.length; i++) {
+        if (otherList[i] == id) {
+            otherList.splice(i, 1)
+            parent = game.find("#"+ id)
+            parent.empty()
+        }
+    }
+}
+function removePlayer(){
+    //remove from list and from screen
+
+    parent = game.find("#"+ player)
+    parent.empty()
+ 
+}
+function placeCobble(id){
+    parent = game.find("#"+ id)
+    parent.append(`<button class="but cobble" id="${id}">  ${id}</button>`)
+    cobbleList.push(id)
+    $("button.cobble").on('click', pressBut)
+}
+function placeHollow(id){
+    parent = game.find("#"+ id)
+    parent.append(`<button class="but hollow" id="${id}">  ${id}</button>`)
+    hollowList.push(id)
+    $("button.hollow").on('click', pressBut)
+}
+function placeLava(id){
+    parent = game.find("#"+ id)
+    parent.append(`<button class="but lava" id="${id}">  ${id}</button>`)
+    $("button.lava").on('click', pressBut)
+    
+}
+function placeSpecial(id){
+    parent = game.find("#"+ id)
+    parent.append(`<button class="but special" id="${id}">  ${id}</button>`)
+    $("button.special").on('click', pressBut)
+    
+}
+function placePlayer(id){
+
+    parent = game.find("#"+ id)
+    parent.append(`<button class="but player" id="${id}">  ${id}</button>`)
+    player = id
+    $("button.player").on('click', pressBut)
+}
 //in button function if certain num change button to lava empty space anything 
 
 //create player button 
