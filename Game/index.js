@@ -92,7 +92,7 @@ function createSpecial(length) {
  
     specialList = []
     temp = 0
-    while (temp <= 3*length) {
+    while (temp <= length) {
         //get rand num
        rand =  Math.floor(Math.random() * (length*length) + 1)
        //console.log(rand)
@@ -110,11 +110,11 @@ function createSpecial(length) {
        }
     }
     player = specialList[0]
-    lavaList = specialList.slice(1, 2.5*length)
-    otherList = specialList.slice(2.5*length, 3*length + 1)
-    // console.log(specialList)
-    // console.log(lavaList)
-    // console.log(otherList)
+    lavaList = specialList.slice(1, specialList.length*2 /3)
+    otherList = specialList.slice(specialList.length*2 /3, 3*length + 1)
+    console.log(specialList)
+    console.log(lavaList)
+    console.log(otherList)
     specialList.sort(function(a, b){return a-b})
 
     //create a list of cobble blocks
@@ -134,7 +134,7 @@ SpawnPlayer()
 
 //spawn player and surround him with lava
 function SpawnPlayer() {
-    console.log(player)
+    //console.log(player)
     //spawn
     cobbleList.push(player)
     removeCobble(player)
@@ -164,11 +164,11 @@ function adjacents(id)  {
         arr.push(up)
     }
     if(id%length != 0 ) {
-        right = id+1
+        right = id-1+2
         arr.push(right)
     }
     if(id <= ((length*length) - length)) {
-        down = id+length
+        down = id-1+1+length
         arr.push(down)
     }
     return arr
@@ -178,23 +178,55 @@ function adjacents(id)  {
 
 //button listener and calls checkListRemove
 function pressBut(event) {
-    console.log("but")
+    //console.log("but")
     id = event.target.id
-//make a distance check
 
-  //check list for whats in it  and append
- checkList(id)
- 
+  //check list for whats in it  and append   
+    //make a distance check
+    adjacents(player).forEach(x=>{
+        if (x==id) {
+
+            //reveals the
+
+            checkList(id)
+            //id is the minedblock at this point
+            revealLava(id)
+            revealSpecial(id)
+        }
+    })
 
 }
-
+function revealSpecial(id){
+    
+    adjacents(id).forEach(reveal => {
+        //console.log(reveal)
+        otherList.forEach(special => {
+            if (reveal == special) {
+                
+                checkList(reveal)
+            }
+        })
+    } )
+}
+function revealLava(id){
+    
+    adjacents(id).forEach(reveal => {
+        
+        lavaList.forEach(lava => {
+            if (reveal == lava) {
+                
+                checkList(reveal)
+            }
+        })
+    } )
+}
 function checkList(id) {
     parent = game.find("#"+ id)
    
     hollowList.forEach(x=> {
         
         if(id ==  x) {
-            console.log("hollow")
+            //console.log("hollow")
             removePlayer()
             placeHollow(player)
             removeHollow(x)
