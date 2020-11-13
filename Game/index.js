@@ -40,7 +40,30 @@ var playerList= []
 //is temp till random gen of player
 var player = 1
 var length = 10
+
+
 generate(length)
+//document.onkeydown = function() {move()};
+
+// $(document).on("keypress", function (e) {
+//     console.log(e)
+// });
+
+document.onkeydown = function (e) {
+    e = e || window.event;
+    console.log(e.key)
+    if (e.key == "ArrowDown"){
+        arrowBut(player-1+1+length)
+        
+    } else if (e.key == "ArrowUp"){
+        arrowBut(player-length)
+    } else if (e.key == "ArrowLeft"){
+        arrowBut(player-1)
+    } else if (e.key == "ArrowRight"){
+        arrowBut(player-1+2)
+    }
+};
+
 
 //clears grid
 function clearBoard() {
@@ -51,6 +74,7 @@ function clearBoard() {
     cobbleList = []
     LavaList = []
 }
+
 //generates new grid; calls createSpecial()
 function generate(length) {
     clearBoard()
@@ -185,9 +209,25 @@ function pressBut(event) {
     //make a distance check
     adjacents(player).forEach(x=>{
         if (x==id) {
-
             //reveals the
+            checkList(id)
+            //id is the minedblock at this point
+            revealLava(id)
+            revealSpecial(id)
+        }
+    })
 
+}
+
+//same thing as pressBut() but with arrowKeys
+function arrowBut(id) {
+
+
+  //check list for whats in it  and append   
+    //make a distance check
+    adjacents(player).forEach(x=>{
+        if (x==id) {
+            //reveals the
             checkList(id)
             //id is the minedblock at this point
             revealLava(id)
