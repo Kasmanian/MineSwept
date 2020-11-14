@@ -1,35 +1,33 @@
-// generate grid
-//add mines randomly 
 
-// update counters
-// timer
-//clear clicks
-//game states 
 //powerups 
 //inventory 
 
 
 //rewrite in model view format
-//variable map size 
-//start with gray boared 
-//only allowed to be moved a set distance
-//reveal a set distance
+
 //instead of numbers use textures 
-//be able to destroy walls
+
 //be able to mark blocks to warn of lava
 //lava spread 
 //spreads first then player can move
 //health system
 //add special items
 
-var grid = document.getElementById('gridy')
 var game =  $('.game')
 //list of lava 
 var LavaList = []
+
+
 //make a list for lava spread
+
 
 //list of all cobble blocks
 var cobbleList = []
+
+//list of near lavacobble
+
+
+
 //list for other things like special items 
 var otherList = []
 //list of mined out or hollow areas
@@ -37,33 +35,38 @@ var hollowList = []
 //list of a spaces player can reach and move to
 var playerList= []
 //current player
+
 //is temp till random gen of player
 var player = 1
+var health = 12
+var fireResist = 0
+var burning = 0
 var length = 10
+var mineDelay = 2
+var stop = true
+
+generate()
 
 
-generate(length)
-//document.onkeydown = function() {move()};
-
-// $(document).on("keypress", function (e) {
-//     console.log(e)
-// });
 
 document.onkeydown = function (e) {
     e = e || window.event;
-    console.log(e.key)
-    if (e.key == "ArrowDown"){
-        arrowBut(player-1+1+length)
-        
-    } else if (e.key == "ArrowUp"){
-        arrowBut(player-length)
-    } else if (e.key == "ArrowLeft"){
-        arrowBut(player-1)
-    } else if (e.key == "ArrowRight"){
-        arrowBut(player-1+2)
+    
+    //console.log(e.key)
+    if(stop) {
+        if (e.key == "s"){
+            arrowBut(player-1+1+length)
+        } else if (e.key == "w"){
+            arrowBut(player-length)
+        } else if (e.key == "a"){
+            arrowBut(player-1)
+        } else if (e.key == "d"){
+            arrowBut(player-1+2)
+        }
     }
-};
 
+
+};
 
 //clears grid
 function clearBoard() {
@@ -76,7 +79,7 @@ function clearBoard() {
 }
 
 //generates new grid; calls createSpecial()
-function generate(length) {
+function generate() {
     clearBoard()
     
     auto = ""
@@ -101,11 +104,11 @@ function generate(length) {
             
         }
     }
-    
     $(".cell").css("width", 100/length + "vw" )
     $(".cell").css("height", 100/length + "vw" )
     $("button.cobble").on('click', pressBut)
-
+   
+    
     createSpecial(length)
   
     
@@ -199,7 +202,35 @@ function adjacents(id)  {
 
 }
 
+function consumeBuff(id) {
+    alert("buff consumed")
+   //haste postion 
+   //heal potion 
+   //fire resistance 
+   
+   
+   }
+function damageTaken() {
+    health = health -1
+}
 
+function healthTaken() {
+    health = health +2
+}
+
+function addFireResist() {
+    fireResist = fireResist + 5
+}
+
+function tickFireResist() {
+    fireResist = fireResist -1
+}
+
+function onFire() {
+    if(fireResist <= 0) {
+        damageTaken()
+    }
+}
 //button listener and calls checkListRemove
 function pressBut(event) {
     //console.log("but")
@@ -230,8 +261,8 @@ function arrowBut(id) {
             //reveals the
             checkList(id)
             //id is the minedblock at this point
-            revealLava(id)
-            revealSpecial(id)
+            // revealLava(id)
+            // revealSpecial(id)
         }
     })
 
@@ -284,21 +315,38 @@ function checkList(id) {
 
     cobbleList.forEach(x=> {
         if(id ==  x) {
-            removeCobble(x)
-            placeHollow(x)
+            console.log("begin")
+            //removeCobble(x)
+            mineCobble(x)
+            //placeHollow(x)
+            
         }
     })
-
+    otherList.forEach(x=> {
+        if(id ==  x) {
+            adjacents(x).forEach(gold =>{
+                if (gold==player){
+                    removePlayer()
+                    placeHollow(player)
+                    removeSpecial(x)
+                    placePlayer(x)
+                    consumeBuff(x)
+                }
+            })
+   
+            
+        }
+    })
     otherList.forEach(x=> {
         if(id ==  x) {
             removeCobble(x)
             placeSpecial(x)
+            
         }
     })
 
 
 }
-
 
 
 function removeCobble(id){
@@ -310,9 +358,11 @@ function removeCobble(id){
 
         }
     }
+    
     parent = game.find("#"+ id)
     parent.empty()
-
+    
+    
 }
 function removeHollow(id){
     //remove from list and from screen
@@ -354,6 +404,28 @@ function removePlayer(){
     parent.empty()
  
 }
+
+function mineCobble(id){
+    console.log("mine")
+    parent = game.find("#"+ id)
+    parent.empty()
+
+    
+    parent.append(`<button class="but cobble mine" id="${id}">  ${id}</button>`)
+    $(".mine").css("animation-duration",  mineDelay+"s" )
+
+    stop = false
+    setTimeout(function(){
+        removeCobble(id)
+        placeHollow(id)
+        revealLava(id)
+        revealSpecial(id)
+        stop = true
+    }, mineDelay*1000); 
+    
+    
+}
+
 function placeCobble(id){
     parent = game.find("#"+ id)
     parent.append(`<button class="but cobble" id="${id}">  ${id}</button>`)
@@ -382,9 +454,8 @@ function placePlayer(id){
 
     parent = game.find("#"+ id)
     parent.append(`<button class="but player" id="${id}">  ${id}</button>`)
+
     player = id
+    
     $("button.player").on('click', pressBut)
 }
-//in button function if certain num change button to lava empty space anything 
-
-//create player button 

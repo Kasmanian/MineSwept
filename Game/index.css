@@ -11,6 +11,10 @@
 
 }
 
+.cell {
+    background-color: black;
+}
+
 #reset {
     width: 50vw;
     height: 5vh;
@@ -48,6 +52,7 @@
 
 .player {
     background-color: purple;
+
 }
 
 .lava {
@@ -56,4 +61,48 @@
 
 .special {
     background-color: gold;
+}
+
+.mine {
+    animation-name: mine;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes mine {
+    0% {
+
+        transform: rotate(20deg);
+
+    }
+
+    20% {
+
+        transform: rotate(-20deg);
+
+    }
+
+    40% {
+
+        transform: rotate(20deg);
+
+    }
+
+    60% {
+
+        transform: rotate(-20deg);
+
+    }
+
+    48% {
+
+        transform: rotate(20deg);
+
+    }
+
+    100% {
+
+        transform: rotate(0deg);
+
+    }
 }
