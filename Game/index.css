@@ -1,25 +1,16 @@
 #play {
     background-color: lightblue;
     height: 90vh;
-}
-
-.title {
-    height: 10vh;
-    background-color: green;
-    align-items: center;
-    justify-content: center;
 
 }
+
+
 
 .cell {
-    background-color: black;
+    background-color: rgb(60, 60, 73);
 }
 
-#reset {
-    width: 50vw;
-    height: 5vh;
-    margin-left: 25vw;
-}
+
 
 .game {
     text-align: center;
@@ -32,12 +23,76 @@
 
 }
 
+.stats {
+    display: grid;
+    background-color: cyan;
+    width: 100vw;
+    height: 18vh;
+    grid-template-columns: 10% 10% 10% 40% 30%;
+    grid-template-rows: 60% 10% 30%;
+}
+
+.stat {
+
+    padding-left: 40%;
+    background-color: white;
+    font-size: 2em;
+}
+
+.title {
+    height: 10vh;
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1/6;
+    grid-row: 1/2;
+
+}
+
+
+
+#reset {
+    width: 100%;
+    height: 100%;
+
+    grid-column: 4/5;
+    grid-row: 3/4;
+}
+
+#health {
+    grid-column: 1/2;
+    grid-row: 3/4;
+    color: red
+}
+
+#fireresist {
+    grid-column: 2/3;
+    grid-row: 3/4;
+    color: orange;
+}
+
+#haste {
+    grid-column: 3/4;
+    grid-row: 3/4;
+    color: springgreen;
+
+}
+
+.msg {
+    grid-column: 5/6;
+    grid-row: 3/4;
+    justify-self: center;
+    color: blue;
+    font-size: 1em;
+}
+
 .but {
     width: 100%;
     height: 100%;
     background-color: gray;
     padding: 0;
     margin: 0;
+
 }
 
 .cobble {
@@ -51,12 +106,16 @@
 }
 
 .player {
-    background-color: purple;
+    background-color: lime;
 
 }
 
 .lava {
     background-color: red;
+}
+
+.lavaSpread {
+    background-color: magenta;
 }
 
 .special {
@@ -68,6 +127,12 @@
     width: 100%;
     height: 100%;
 }
+
+.burning {
+    background-color: orange;
+}
+
+img {}
 
 @keyframes mine {
     0% {
