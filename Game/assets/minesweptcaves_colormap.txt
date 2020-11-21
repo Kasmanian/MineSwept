@@ -1,7 +1,0 @@
-Gold Gradient:
-	Highlight #fffde0
-	Yellow01 #fdf55f
-	Yellow02 #fad64a
-	Yellow03 #dc9613
-	Brown01 #752802
-	Brown02 #4a1800
