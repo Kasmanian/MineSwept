@@ -246,7 +246,8 @@ const handleDamage = async function() {
         if (element!=null) element.classList.add('hurt');
         await timer(749);
     }
-    document.getElementById('thespian').classList.remove('hurt');
+    let element = document.getElementById('thespian')
+    if (element!=null) element.classList.remove('hurt');
     if (thespian.health<1) handleGameOver(false);
     user.healthBuffer = false;
 }
