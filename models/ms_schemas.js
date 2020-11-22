@@ -21,7 +21,7 @@ const MSUser = new Schema({
     name: { type: String, required: true, unique: true },
     salt: { type: String, required: true },
     pass: { type: String, required: true },
-    save: { type: Schema.Types.ObjectId, ref: 'MSSave' },
+    //save: { type: Schema.Types.ObjectId, ref: 'MSSave' },
 });
 
 module.exports = mongoose.model('User', MSUser, 'ms_schemas');
