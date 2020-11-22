@@ -23,7 +23,7 @@ $(function() {
         //allid()
         //add("feli", "foobar")
         //destroy(2)
-        //login(dat)
+        login(dat)
         //edit(1, "foo")
         
     //scores  
@@ -117,7 +117,7 @@ async function add(name, password) {
     }).then(() => {
             $message.html('<span class="has-text-success">Success! You are now logged in.</span>');
 
-            //window.location.replace("/index.html");
+            window.location.replace("/index.html");
             
         }).catch(() => {
             
