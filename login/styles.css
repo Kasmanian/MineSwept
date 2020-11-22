@@ -85,8 +85,8 @@
 
 #login .login-card button:hover,
 #login .login-card button:focus {
-  color: #13294B;
-  border-color: #13294B;
+  color: rgb(56, 124, 56);
+  border-color: rgb(56, 124, 56);
 }
 
 #login .login-card button:active {
