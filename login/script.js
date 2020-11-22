@@ -18,19 +18,21 @@ $(function() {
             return o;
         }, {});
     //so this checks with the user.json by pushing the input into it  
+    //secrets
         //byid(2)
         //allid()
         //add("feli", "foobar")
         //destroy(2)
-        login(dat)
+        //login(dat)
         //edit(1, "foo")
         
-        
+    //scores  
         //byidScore(2)
-        //addScore("ricky", "easy", 320)
+    //can use addscore as editScore
+        //addScore("ricky", "hard", 420)
         //allidScore()
         //destroyScore(2)
-        //editScore(3, 3000)
+        //editScore(6, 3000)
     });
 
 });
@@ -94,7 +96,6 @@ async function add(name, password) {
         method: 'delete',
 
         url:  website + 'secret/' + id,
-        
 
     }).then((resp) => {
         return resp.data

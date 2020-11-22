@@ -167,15 +167,41 @@ app.get('/score/:id', (req, res) => {
 //add new
 
 app.post('/score', (req, res)=> {
+    //if already exist 
+    var exist = null
+    Score.getAllIDs2().forEach(ele => {
+        
+        if (ele != undefined ){
+            if(Score.findByID2(ele.toString()).name == req.body.name) {
+                
+                if(Score.findByID2(ele.toString()).mode == req.body.mode) {
+                
+                    exist = Score.findByID2(ele.toString())
+                    
+                }
+                
+            }
+        }
+       
+    });
+
+    if (exist != null) {
+        exist.update2(req.body.high_score);
+        return res.json(exist);
+    }
+
+
     let s = Score.create2(req.body.name, req.body.mode, req.body.high_score,);
     //console.log(s)
     if (s == null) {
         res.status(400).send("Bad Request");
         return;
     }
+
+
     return res.json(s);
 });
-//edit account
+//edit score
 app.put('/score/:id', (req, res) => {
 
     let s = Score.findByID2(req.params.id);

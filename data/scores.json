@@ -16,5 +16,17 @@
     "name": "ricky",
     "mode": "easy",
     "high_score": 320
+  },
+  "6": {
+    "id": 6,
+    "name": "ricky",
+    "mode": "hard",
+    "high_score": 420
+  },
+  "7": {
+    "id": 7,
+    "name": "ricky",
+    "mode": "medium",
+    "high_score": 420
   }
 }
