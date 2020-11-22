@@ -1,149 +1,143 @@
 .grid {
     display: grid;
-    grid-gap: 0px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 25vh 50vh 25vh;
+    grid-gap: 5px
 }
 
-#block {
+body {
+    background-image: url(assets/homepage/wallpaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-img {
-    width: 100%;
-    height: 100%;
-    image-rendering: pixelated;
+.header {
+    grid-column: 1/6;
+    grid-row: 1;
+
+    font-family: 'Times New Roman', Times, serif;
 }
 
-#thespian, #tool {
-    position: absolute;
-    margin-left: .1%;
-    margin-top: .1%;
+#logo {
+    background-image: url(assets/homepage/mineswept.png);
+    background-repeat: no-repeat;
+    background-size: 50vw;
+    background-position: center;
+
+
 }
 
-#tool {
-    position: absolute;
+.badges {
+    grid-column: 1/2;
+    grid-row: 2;
+    background-color: rgba(0, 128, 0, 0.473);
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
 }
 
-#item_frame {
-    position: absolute;
-    z-index: 2000;
+button {
+    margin: auto;
+    width: 20vw;
+    height: 20vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    transition: all .2s ease-in-out;
 }
 
-#anmt.aim-left {
-    position: absolute;
-    animation-name: swing_left;
-    animation-duration: .225s;
-    animation-iteration-count: 1;
+button:active,
+button:focus {
+    outline: 0;
+    border: none;
+    -moz-outline-style: none;
 }
 
-#anmt.aim-right {
-    position: absolute;
-    animation-name: swing_right;
-    animation-duration: .225s;
-    animation-iteration-count: 1;
+button:hover {
+    transform: scale(1.4);
+    cursor: pointer;
 }
 
-#item_frame.anmt {
-    animation-name: expand;
-    animation-duration: .225s;
-    animation-iteration-count: 1;
+#badgesB {
+    background-image: url(assets/homepage/badges.png);
 }
 
-.left {
-    animation-name: nudge_left;
-    animation-duration: .2s;
-    animation-iteration-count: 1;
+#easyB {
+    background-image: url(assets/homepage/easy.jpg);
 }
 
-.up {
-    animation-name: nudge_up;
-    animation-duration: .2s;
-    animation-iteration-count: 1;
+#mediumB {
+    background-image: url(assets/homepage/medium.png);
 }
 
-.right {
-    animation-name: nudge_right;
-    animation-duration: .2s;
-    animation-iteration-count: 1;
+#hardB {
+    background-image: url(assets/homepage/hard.jpg);
 }
 
-.down {
-    animation-name: nudge_down;
-    animation-duration: .2s;
-    animation-iteration-count: 1;
+.easy {
+    grid-column: 2/3;
+    grid-row: 2;
+    background-color: rgba(255, 255, 0, 0.356);
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
 }
 
-.hurt {
-    animation-name: hurt;
-    animation-duration: .75s;
-    animation-iteration-count: infinite;
+.medium {
+    grid-column: 3/4;
+    grid-row: 2;
+    background-color: rgba(255, 166, 0, 0.479);
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
 }
 
-.empty.hurt {
-    animation-iteration-count: 1;
+.hard {
+    grid-column: 4/5;
+    grid-row: 2;
+    background-color: rgba(255, 0, 0, 0.445);
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
 }
 
-#health {
-    position: fixed;
-    top: 100px;
-    z-index: 1000;
+.scores {
+    grid-column: 5/6;
+    grid-row: 2;
+    background-color: rgb(84, 84, 177);
+    border-radius: 30px;
 }
 
-.heart {
-    margin-left: 16px;
-    width: 32px !important;
-    height: 32px !important;
+#scoreDisplay {
+    background-image: url(assets/homepage/scores.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center top;
 }
 
-.empty {
-    margin-left: 16px;
-    width: 32px;
-    height: 32px;
+#title1 {
+    grid-column: 2/3;
+    grid-row: 3;
+    font-size: 50px;
+    color: white;
+    text-align: center;
 }
 
-@keyframes hurt {
-    from { transform: scale(1, 1); }
-    6.6% { transform: scale(1.125, 1.125); }
-    13.2% { transform: scale(1, 1); }
-    to { transform: scale(1, 1); }
+#title2 {
+    grid-column: 3/4;
+    grid-row: 3;
+    font-size: 50px;
+    color: white;
+    text-align: center;
 }
 
-@keyframes expand {
-    from { transform: scale(1.2, 1.2); }
-    75% { transform: scale(1.2, 1.2); }
-    to { transform: scale(1, 1); }
-}
-
-@keyframes nudge_left {
-    from { margin-left: .1%; }
-    50% { margin-left: -.1%; }
-    to { margin-left: .1%; }
-}
-
-@keyframes nudge_up {
-    from { margin-top: .1%; }
-    50% { margin-top: -.1%; }
-    to { margin-top: .1%; }
-}
-
-@keyframes nudge_right {
-    from { margin-left: .1%; }
-    50% { margin-left: .2%; }
-    to { margin-left: .1%; }
-}
-
-@keyframes nudge_down {
-    from { margin-top: .1%; }
-    50% { margin-top: .2%; }
-    to { margin-top: .1%; }
-}
-
-@keyframes swing_left {
-    from { transform: rotate(-60deg); margin-left: .5%; }
-    10% { transform: rotate(-120deg); margin-left: -.3%; }
-    to { transform: rotate(-75deg); margin-left: .1%; }
-}
-
-@keyframes swing_right {
-    from { transform: rotate(-15deg); margin-left: -.5%; }
-    10% { transform: rotate(45deg); margin-left: .4%; }
-    to { transform: rotate(0deg); margin-left: .1%; }
+#title3 {
+    grid-column: 4/5;
+    grid-row: 3;
+    font-size: 50px;
+    color: white;
+    text-align: center;
 }

@@ -1,4 +1,4 @@
-import { invalids, blocks } from "./data.js"
+import { invalids, blocks, items } from "./data.js"
 
 export default function Game(gamemode, snapshot=undefined) {
 
@@ -15,6 +15,8 @@ export default function Game(gamemode, snapshot=undefined) {
     {
         health: 5,
         points: 0,
+        resist: 0,
+        speedy: 0,
         aiming: -1,
         lastxy: -1,
         currxy: -1,
@@ -26,26 +28,25 @@ export default function Game(gamemode, snapshot=undefined) {
     // an array of tiles
     var chunkmap = no(snapshot)? new Array(gamemode.size*gamemode.size).fill(1) : snapshot[1];
 
-    var keybinds = no(snapshot)? { 
-        37: -1,
-        65: -1,
-        38: -gamemode.size,
-        87: -gamemode.size,
-        39: 1,
-        68: 1,
-        40: gamemode.size,
-        83: gamemode.size,
-    } : snapshot[2];
+    // var keybinds = no(snapshot)? { 
+    //     37: -1,
+    //     65: -1,
+    //     38: -gamemode.size,
+    //     87: -gamemode.size,
+    //     39: 1,
+    //     68: 1,
+    //     40: gamemode.size,
+    //     83: gamemode.size,
+    // } : snapshot[2];
 
     // { move: [], mine: [], mark: [], swap: [], drop: [], feat: [], lose: [] }
     this.extract = {
         gamemode: gamemode,
         snapshot: snapshot,
-        keybinds: keybinds,
+        // keybinds: keybinds,
         thespian: thespian,
         blockmap: { unloaded: new Array(gamemode.size*gamemode.size).fill(0), rendered: [...chunkmap] },
-        magmamap: [],
-        dropsmap: [],
+        dropsmap: new Array(gamemode.size*gamemode.size).fill(-1),
         listener: {},
         continue: true,
     }
@@ -60,6 +61,7 @@ Game.prototype.on = function(event, CB) {
 }
 
 Game.prototype.load = function(center) {
+    const drops = this.dropsmap();
     const chunk = this.unloaded();
     const r = this.size();
     for (let h of this.gamemode().harm) {
@@ -69,20 +71,42 @@ Game.prototype.load = function(center) {
             if (blocks[chunk[n]].damage>0 | overlap(center, n, r)) continue;
             let perim = this.perimeter(n, r);
             if (valid(perim)) {
-                chunk[n] = h.ID;
+                chunk[n] = h.id;
                 for (let p of perim) {
-                    let ID = chunk[p]==0? 1 : chunk[p];
-                    chunk[p] = chunk[p]>4? chunk[p] : ID+1;
+                    let id = chunk[p]==0? 1 : chunk[p];
+                    chunk[p] = chunk[p]>4? chunk[p] : id+1;
                 }
                 count--;
             }
+        }
+    }
+    for (let d of this.gamemode().drop) {
+        let count = d.count;
+        while (count>0) {
+            let n = Math.floor(Math.random()*r*r);
+            if (d.id==3) {
+                let magmamap = [];
+                for (let c in chunk) {
+                    if (blocks[chunk[c]].damage>0) magmamap.push(c);
+                }
+                while (count>0) {
+                    let n = Math.floor(Math.random()*magmamap.length);
+                    let perim = this.perimeter(magmamap[n], r);
+                    magmamap.splice(magmamap.indexOf(n), 1);
+                    let m = perim[Math.floor(Math.random()*perim.length)];
+                    if (blocks[chunk[n]].damage>0) continue;
+                    drops[m] = 3;
+                    count--;
+                } continue;
+            } else if (blocks[chunk[n]].damage>0&drops[n]!=-1) continue;
+            drops[n] = d.id;
+            count--;
         }
     }
     this.thespian().lastxy = center;
     this.thespian().currxy = center;
     this.thespian().movexy = this.perimeter(center, r, false);
     this.clear(center);
-    chunk;
 }
 
 Game.prototype.clear = function(center) {
@@ -94,7 +118,7 @@ Game.prototype.clear = function(center) {
     let queue = [center];
     while (count>0 & match>0) {
         let n = queue.pop();
-        if (blocks[unloaded[n]].height>-1) {
+        if (blocks[unloaded[n]].height>-1&this.dropsmap()[n]==-1) {
             rendered[n] = unloaded[n]==1? 0 : unloaded[n];
             count--; 
         }
@@ -122,40 +146,49 @@ Game.prototype.spread = function(queue=[], block) {
 
 Game.prototype.move = function(direction, persistance=false) {
     let thespian = this.thespian();
+    thespian.aiming = direction;
     let rendered = this.rendered();
-    let newxy = thespian.currxy+this.extract.keybinds[direction];
-    let block = blocks[rendered[newxy]];
+    let block = blocks[rendered[direction]];
     let oldxy = thespian.currxy;
     let perim = [...thespian.movexy];
-    let coord = perim.indexOf(newxy);
+    let coord = perim.indexOf(direction);
     if (coord>-1) {
-        if ((block.isWalkable|persistance|!blocks[rendered[oldxy]].isWalkable)&blocks[rendered[newxy]].height<2) {
+        if ((block.isWalkable|persistance|!blocks[rendered[oldxy]].isWalkable)&blocks[rendered[direction]].height<2) {
             thespian.lastxy = oldxy;
-            thespian.currxy = newxy;
-            thespian.movexy = this.perimeter(newxy, this.size(), false);
+            thespian.currxy = direction;
+            thespian.movexy = this.perimeter(direction, this.size(), false);
             return perim;
         } else {
             thespian.lastxy = oldxy;
-            return blocks[rendered[newxy]].isMineable? this.mine(newxy) : this.take(newxy);
+            return blocks[rendered[direction]].isMineable? this.mine(direction) : this.take(direction);
         }
     } else {
-        thespian.aiming = oldxy;
         return [];
     }
 }
 
 Game.prototype.mine = function(direction) {
     if (this.rendered()[direction]==this.unloaded()[direction]) return [direction];
-    this.thespian().aiming = direction;
-    this.rendered()[direction] = this.unloaded()[direction];
-    if (blocks[this.rendered()[direction]].source) this.magmamap().push(direction);
+    this.rendered()[direction] = this.dropsmap()[direction]!=-1? 9 : this.unloaded()[direction];
     return [direction];
 }
 
 Game.prototype.take = function(direction) {
-    this.thespian().aiming = direction;
-    console.log("I'm taking away!");
+    if (!blocks[this.rendered()[direction]].isTakeable) return [];
+    items[this.dropsmap()[direction]].give(this);
+    this.rendered()[direction] = this.unloaded()[direction];
     return [direction];
+}
+
+Game.prototype.score = function() {
+    return this.thespian().points + this.rendered().reduce((a, b)=> { return a+blocks[b].points }, 0);
+}
+
+Game.prototype.over = function() {
+    for (let n in this.rendered()) {
+        if (this.rendered()[n]==1&!blocks[this.unloaded()[n]].source) return false;
+    }
+    return true;
 }
 
 Game.prototype.update = function(handler='all') {
@@ -252,8 +285,8 @@ Game.prototype.unloaded = function() {
     return this.extract.blockmap.unloaded;
 }
 
-Game.prototype.magmamap = function() {
-    return this.extract.magmamap;
+Game.prototype.dropsmap = function() {
+    return this.extract.dropsmap;
 }
 
 Game.prototype.gamemode = function() {
