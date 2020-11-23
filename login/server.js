@@ -4,10 +4,10 @@ const express = require('express');
 var cors = require('cors')
 const app = express();
 let port = process.env.PORT || 3030;
-var favicon = require('serve-favicon')
-var path = require('path')
+// var favicon = require('serve-favicon')
+// var path = require('path')
 app.use(cors());
-app.use(favicon(path.join('../assets/favicon/favicon.ico')))
+// app.use(favicon(path.join('../assets/favicon/favicon.ico')))
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
