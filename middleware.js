@@ -3,7 +3,7 @@ var favicon = require('serve-favicon')
 var path = require('path')
 
 var app = express()
-app.use(favicon(path.join('./assets/favicon/favicon-16x16.png', 'public', 'favicon.ico')))
+app.use(favicon(path.join('./assets/favicon/favicon-16x16.png')))
 
 // Add your routes here, etc.
 
