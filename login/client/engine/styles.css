@@ -1,8 +1,66 @@
 body {
+    font-family: Minecraftia;
     background-color: #000000;
     animation-name: fade_in;
     animation-duration: 3s;
     animation-iteration-count: 1;
+}
+
+#root.lose-screen {
+    background-color: #2b0000;
+}
+
+.lose-screen > section {
+    opacity: 25%;
+}
+
+#leaf {
+    z-index: 2000;
+    position: absolute;
+    left: 50%;
+}
+
+#menu {
+    margin-top: 25vh;
+    display: grid;
+    position: relative;
+    left: -50%;
+}
+
+#message {
+    color: #ffffff;
+    padding-left: 2%;
+}
+
+#score-final {
+    position: relative;
+    color: #fffd64;
+    left: 25%;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+#view, #exit {
+    position: relative;
+    background-image: url(./assets/textures/stone.png);
+    height: 5vh;
+    width: 14.5vw;
+    margin-top: .5vh;
+    image-rendering: pixelated;
+    background-color: gray;
+    font-family: Minecraftia;
+    color: #ffffff;
+}
+
+button:hover {
+    border: solid;
+    border-width: 1%;
+    border-color: #ffffff;
+    outline: none;
+}
+
+button:focus {
+    outline: 0;
 }
 
 .grid {

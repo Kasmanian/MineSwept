@@ -98,7 +98,7 @@ Game.prototype.load = function(center) {
                     drops[m] = 3;
                     count--;
                 } continue;
-            } else if (blocks[chunk[n]].damage>0&drops[n]!=-1) continue;
+            } else if (blocks[chunk[n]].damage>0|drops[n]!=-1) continue;
             drops[n] = d.id;
             count--;
         }
@@ -153,7 +153,7 @@ Game.prototype.move = function(direction, persistance=false) {
     let perim = [...thespian.movexy];
     let coord = perim.indexOf(direction);
     if (coord>-1) {
-        if ((block.isWalkable|persistance|!blocks[rendered[oldxy]].isWalkable)&blocks[rendered[direction]].height<2) {
+        if ((block.isWalkable|persistance|!blocks[rendered[oldxy]].isWalkable)&blocks[rendered[direction]].height<2&this.rendered()[direction]!=9) {
             thespian.lastxy = oldxy;
             thespian.currxy = direction;
             thespian.movexy = this.perimeter(direction, this.size(), false);

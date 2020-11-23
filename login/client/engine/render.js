@@ -144,14 +144,40 @@ const renderPoints = function() {
     element.remove();
 }
 
+// const handleGameOver = function(won) {
+//     user.invincible = true;
+//     won? '' : handleSound('game_lost.oga');
+//     let message = won? 'Cave cleared!' : 'You swam in lava...';
+//     document.getElementById('health').remove();
+//     document.getElementById('score').remove();
+//     document.getElementById('thespian').remove();
+//     won? update(game.score()) : '';
+// }
+
 const handleGameOver = function(won) {
-    user.invincible = true;
-    won? '' : handleSound('game_lost.oga');
-    let message = won? 'Cave cleared!' : 'You swam in lava...';
-    document.getElementById('health').remove();
-    document.getElementById('score').remove();
-    document.getElementById('thespian').remove();
-    won? update(game.score()) : '';
+    clearUI(); user.invincible = true;
+    if (!won) {
+        handleSound('game_lost.oga');
+        document.getElementById('root').classList.add('lose-screen');
+    } else update(game.score());
+    const $leaf = $('#leaf');
+    let message = won? 'Cave cleared!' : 'You swam in lava.';
+    let button1 = '<div type="button" class="button"><button id="view">View Map</button></div>';
+    let button2 = '<div type="button" class="button"><button id="exit">Exit</button></div>';
+    $($leaf).append(`<div id="menu"><div id="message">${message}</div><div id="score-final">score: ${game.score()}</div>${button1}${button2}</div>`);
+    $($leaf).on('click', '#view', handleClickView);
+    $($leaf).on('click', '#exit', handleClickExit);
+}
+
+const handleClickView = function(event) {
+    const $leaf = $('#leaf');
+    $($leaf).empty();
+    document.getElementById('root').classList.remove('lose-screen');
+    document.body.addEventListener('click', handleClickExit, true);
+}
+
+const handleClickExit = function(event) {
+    window.history.go(-1);
 }
 
 const handleKeyPressed = function(event) {
@@ -253,11 +279,11 @@ const handleDamage = async function() {
         handleSound('hurts1.ogg');
         let element = document.getElementById('heart_'+thespian.health);
         if (element!=null) element.classList.add('hurt');
+        if (thespian.health<1) handleGameOver(false);
         await timer(749);
     }
     let element = document.getElementById('thespian')
     if (element!=null) element.classList.remove('hurt');
-    if (thespian.health<1) handleGameOver(false);
     user.healthBuffer = false;
 }
 
@@ -351,6 +377,14 @@ const nudge = function() {
 }
 
 const no = (o)=> { return o===undefined; }
+
+const clearUI = ()=> {
+    const $root = $('#root'); $($root).off();
+    document.onkeydown = ()=>{};
+    document.getElementById('health').remove();
+    document.getElementById('score').remove();
+    document.getElementById('thespian').remove();
+}
 
 async function update(score) {
     const result = await axios({
