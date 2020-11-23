@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-var PORT = process.env.PORT || 3030;
+// var PORT = process.env.PORT || 3030;
+var PORT = process.env.PORT;
+if (PORT == null || PORT == '') {
+  PORT = 8000;
+}
+app.listen(port);
 var favicon = require('serve-favicon');
 var PATH = require('path');
 console.log(PORT)
