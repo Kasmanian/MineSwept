@@ -7,14 +7,9 @@ const site = "http://localhost:3030/"
 const port =  3030
 const website = '' + port
 //"http://localhost:3030/"
-
-
-$(function() {
-
-    
-    $form.submit(function(e) {
-        e.preventDefault();
-  
+document.getElementById('1').onclick = function(e) {
+    e.preventDefault();
+        
         $message.html('');
 
 
@@ -24,6 +19,7 @@ $(function() {
             //console.log(o)
             return o;
         }, {});
+        
     //so this checks with the user.json by pushing the input into it  
     //secrets
         //byid(2)
@@ -40,22 +36,27 @@ $(function() {
         //allidScore()
         //destroyScore(2)
         //editScore(6, 3000)
-        alert()
-    });
-    $form.submit(function(e) {
-        e.preventDefault();
-  
+          
+}
+
+document.getElementById('2').onclick = function(e) {
+    e.preventDefault();
+        
         $message.html('');
-
-
   //so basically returns input 
         const dat = $form.serializeArray().reduce((o, x) => {
             o[x.name] = x.value;
             //console.log(o)
             return o;
         }, {});
-        console.log("stop")
-    });
+        add(dat.user, dat.password)
+          
+}
+
+$(function() {
+
+    
+        
 
 });
  async function byid(id) {
