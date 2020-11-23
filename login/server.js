@@ -131,7 +131,7 @@ app.delete('/secret/:id', (req, res) => {
 
 
 //heroku makes its own portnum cant hardcode
-const port = 3030;
+const port = process.env.PORT || 3030;
 app.listen(port, () => {
     console.log("User Login Example up and running on port " + port);
 });

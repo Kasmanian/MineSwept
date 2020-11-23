@@ -1,7 +1,13 @@
 
 const $form = $('#login-form');
 const $message = $('#message');
-const website = "http://localhost:3030/"
+
+const site = "http://localhost:3030/"
+const port = process.env.PORT || 3030;
+const website = '' + port
+//"http://localhost:3030/"
+
+
 $(function() {
 
     
@@ -198,3 +204,9 @@ async function addScore(name, mode, score) {
     })
  }
 
+//  host: ec2-54-147-126-202.compute-1.amazonaws.com
+//  database: dda16farqg62o2
+//  user: qbfmetnhedgwns
+//  port: 5432
+//  password: d431dfd950d0ff136eca88d21a4c0ede3de2470d0c3fce67d5faf2dea7f775a2
+//  uri: postgres://qbfmetnhedgwns:d431dfd950d0ff136eca88d21a4c0ede3de2470d0c3fce67d5faf2dea7f775a2@ec2-54-147-126-202.compute-1.amazonaws.com:5432/dda16farqg62o2
