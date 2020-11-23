@@ -1,1 +1,1 @@
-web: index
+web: node /login/serve.js
