@@ -2,8 +2,8 @@
 const $form = $('#login-form');
 const $message = $('#message');
 
-const site = "http://localhost:3030/"
-const port = 3030;
+const site = '';
+const port = window.localStorage.PORT;
 const website = ''
 //"http://localhost:3030/"
 
@@ -120,23 +120,22 @@ async function add(name, password) {
     })
  }
 
- async function login(dat) {
-    console.log(dat)
+async function login(data) {
     await axios({
         method: 'post',
         url: 'login',
         data: {
-            name: dat.user,
-            pass: dat.password,
+            name: data.user,
+            pass: data.password,
         }
     }).then(() => {
             $message.html('<span class="has-text-success">Success! You are now logged in.</span>');
             window.location.pathname = './client/index.html'
-            window.localStorage.user = dat.user;
+            window.localStorage.user = data.user;
         }).catch(() => {
             $message.html('<span class="has-text-danger">Something went wrong and you were not logged in. Check your name and password and your internet connection.</span>');
     });
- }
+}
 
 // Turn the data object into an array of URL-encoded key/value pairs.
 
