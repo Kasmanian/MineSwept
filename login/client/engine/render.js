@@ -151,7 +151,7 @@ const handleGameOver = function(won) {
     document.getElementById('health').remove();
     document.getElementById('score').remove();
     document.getElementById('thespian').remove();
-    won? update(game.thespian().points) : '';
+    won? update(game.score()) : '';
 }
 
 const handleKeyPressed = function(event) {

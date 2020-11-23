@@ -41,6 +41,20 @@ document.getElementById('2').onclick = function(e) {
         add(dat.user, dat.password)
 
 }
+
+document.getElementById('3').onclick = function(e) {
+    e.preventDefault();
+
+        $message.html('');
+  //so basically returns input 
+        const dat = $form.serializeArray().reduce((o, x) => {
+            o[x.name] = x.value;
+            //console.log(o)
+            return o;
+        }, {});
+        destroy(dat.user, dat.password)
+
+}
  async function byid(id) {
     await axios({
         method: 'get',

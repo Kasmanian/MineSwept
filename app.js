@@ -85,24 +85,17 @@ app.get('/score', (req, res)=> {
     });
 });
 
-app.post('/finish', (res, req)=> {
+app.post('/finish', (req, res)=> {
     console.log('update called')
     client.connect(err => {
-        console.log(req.body)
-
         const collection = client.db("MineSweptGames").collection("scores");
         let name = req.body.name;
         let mode = req.body.mode;
         let score = req.body.score;
         if (score == undefined) return;
-        let update = false;
-        collection.find({ name: name, mode: mode }).forEach((doc)=> {
-            if (doc.score<score) {
-                collection.updateOne({ name: name, mode: mode }, { name: name, mode: mode, score: score });
-            }
-        }).then(()=> {
-            console.log(update);
+        collection.updateOne({ name: name, mode: mode, score: { $lt: score } }, { $set: { name: name, mode: mode, score: score } }).then(()=> {
         });
+        res.status(200).send("Score recorded");
     });
 });
 
