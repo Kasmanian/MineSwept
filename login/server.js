@@ -1,5 +1,3 @@
-//this calls secret functions
-
 const express = require('express');
 var cors = require('cors')
 const app = express();
@@ -21,8 +19,8 @@ app.use(expressSession({
     saveUninitialized: false
 }));
 
-const Secret = require("./Secret.js").Secret;
-const Score = require("./Secret.js").Score;
+const Secret = require("../Secret.js").Secret;
+const Score = require("../Secret.js").Score;
 const login_data = require('data-store')({ path: process.cwd() + '/data/secrets.json' });
 
 // app.get('/', function(req, res) {

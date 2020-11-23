@@ -1,6 +1,15 @@
 import Game from "./game.js";
 import { gamemodes, blocks, items, audio } from "./data.js";
 
+// async function update(score) {
+//     const result = await axios({
+//         method: 'post',
+//         url: '/finish',
+//         params: { name: window.localStorage.user, mode: window.localStorage.gamemode, score: score },
+//     });
+//     return await result;
+// }
+
 var game = new Game(gamemodes[window.localStorage.gamemode]);
 var user = {
     updated: [],
@@ -142,6 +151,7 @@ const handleGameOver = function(won) {
     document.getElementById('health').remove();
     document.getElementById('score').remove();
     document.getElementById('thespian').remove();
+    won? update(game.thespian().points) : '';
 }
 
 const handleKeyPressed = function(event) {
@@ -341,3 +351,12 @@ const nudge = function() {
 }
 
 const no = (o)=> { return o===undefined; }
+
+async function update(score) {
+    const result = await axios({
+        method: 'post',
+        url: '/finish',
+        data: { name: window.localStorage.user, mode: window.localStorage.gamemode, score: score },
+    });
+    return await result;
+}

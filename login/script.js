@@ -3,17 +3,14 @@ const $form = $('#login-form');
 const $message = $('#message');
 
 const site = "http://localhost:3030/"
-const port = process.env.PORT || 3030;
-const website = '' + port
+const port = 3030;
+const website = ''
 //"http://localhost:3030/"
 
 
-$(function() {
+document.getElementById('1').onclick = function(e) {
+    e.preventDefault();
 
-    
-    $form.submit(function(e) {
-        e.preventDefault();
-  
         $message.html('');
 
 
@@ -23,29 +20,30 @@ $(function() {
             //console.log(o)
             return o;
         }, {});
-    //so this checks with the user.json by pushing the input into it  
-    //secrets
-        //byid(2)
-        //allid()
-        //add("feli", "foobar")
-        //destroy(2)
-        login(dat)
-        //edit(1, "foo")
-        
-    //scores  
-        //byidScore(2)
-    //can use addscore as editScore
-        //addScore("ricky", "hard", 420)
-        //allidScore()
-        //destroyScore(2)
-        //editScore(6, 3000)
-    });
 
-});
+    //so this checks with the user.json by pushing the input into it
+
+        login(dat)
+
+
+}
+
+document.getElementById('2').onclick = function(e) {
+    e.preventDefault();
+
+        $message.html('');
+  //so basically returns input 
+        const dat = $form.serializeArray().reduce((o, x) => {
+            o[x.name] = x.value;
+            //console.log(o)
+            return o;
+        }, {});
+        add(dat.user, dat.password)
+
+}
  async function byid(id) {
     await axios({
         method: 'get',
-        //so this is how we are doing the postman using these urls
         url: website + '/secret/'+id,
 
     }).then((resp) => {
@@ -85,7 +83,7 @@ async function add(name, password) {
     await axios({
         method: 'post',
 
-        url: website + 'secret',
+        url: 'signup',
         
         data: {
             name: name,
@@ -109,28 +107,21 @@ async function add(name, password) {
  }
 
  async function login(dat) {
-    //console.log(dat.user, dat.password)
-
+    console.log(dat)
     await axios({
         method: 'post',
-
-        url: website +  'login',
-        
+        url: 'login',
         data: {
             name: dat.user,
             pass: dat.password,
         }
     }).then(() => {
             $message.html('<span class="has-text-success">Success! You are now logged in.</span>');
-
-            window.location.replace("/index.html");
-            
+            window.location.pathname = './client/index.html'
+            window.localStorage.user = dat.user;
         }).catch(() => {
-            
             $message.html('<span class="has-text-danger">Something went wrong and you were not logged in. Check your name and password and your internet connection.</span>');
-        
-             
-        });
+    });
  }
 
 // Turn the data object into an array of URL-encoded key/value pairs.
