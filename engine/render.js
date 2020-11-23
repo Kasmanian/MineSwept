@@ -1,7 +1,6 @@
 import Game from "./game.js";
 import { gamemodes, blocks, items, audio } from "./data.js";
 
-console.log(window.localStorage.gamemode);
 var game = new Game(gamemodes[window.localStorage.gamemode]);
 var user = {
     updated: [],
