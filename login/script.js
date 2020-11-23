@@ -3,7 +3,8 @@ const $form = $('#login-form');
 const $message = $('#message');
 
 const site = "http://localhost:3030/"
-const port = process.env.PORT || 3030;
+// const port = process.env.PORT || 3030;
+const port =  3030
 const website = '' + port
 //"http://localhost:3030/"
 
@@ -39,6 +40,21 @@ $(function() {
         //allidScore()
         //destroyScore(2)
         //editScore(6, 3000)
+        alert()
+    });
+    $form.submit(function(e) {
+        e.preventDefault();
+  
+        $message.html('');
+
+
+  //so basically returns input 
+        const dat = $form.serializeArray().reduce((o, x) => {
+            o[x.name] = x.value;
+            //console.log(o)
+            return o;
+        }, {});
+        console.log("stop")
     });
 
 });
