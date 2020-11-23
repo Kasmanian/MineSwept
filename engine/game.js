@@ -186,7 +186,15 @@ Game.prototype.score = function() {
 
 Game.prototype.over = function() {
     for (let n in this.rendered()) {
-        if (this.rendered()[n]==1&!blocks[this.unloaded()[n]].source) return false;
+        let perim = this.perimeter(parseInt(n), this.size(), false);
+        let moves = perim.length;
+        for (let m in perim) {
+            if (blocks[this.unloaded()[perim[m]]].damage<1) perim.splice(m, 1);
+        }
+        if (this.rendered()[n]==1&!blocks[this.unloaded()[n]].source) {
+            if (moves==perim.length) continue;
+            return false;
+        }
     }
     return true;
 }

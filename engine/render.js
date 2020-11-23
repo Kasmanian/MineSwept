@@ -1,7 +1,6 @@
 import Game from "./game.js";
 import { gamemodes, blocks, items, audio } from "./data.js";
 
-console.log(window.localStorage.gamemode);
 var game = new Game(gamemodes[window.localStorage.gamemode]);
 var user = {
     updated: [],
@@ -246,7 +245,8 @@ const handleDamage = async function() {
         if (element!=null) element.classList.add('hurt');
         await timer(749);
     }
-    document.getElementById('thespian').classList.remove('hurt');
+    let element = document.getElementById('thespian')
+    if (element!=null) element.classList.remove('hurt');
     if (thespian.health<1) handleGameOver(false);
     user.healthBuffer = false;
 }

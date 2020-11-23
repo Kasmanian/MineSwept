@@ -20,7 +20,8 @@
     "express-session": "^1.17.1",
     "jquery": "^3.5.1",
     "mongoose": "^5.10.15",
-    "require": "^2.4.20"
+    "require": "^2.4.20",
+    "serve-favicon": "^2.5.0"
   },
   "engines": {
     "node": "v12.18.3"
