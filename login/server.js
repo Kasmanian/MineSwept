@@ -3,6 +3,7 @@
 const express = require('express');
 var cors = require('cors')
 const app = express();
+let port = process.env.PORT || 3030;
 app.use(cors());
 
 const bodyParser = require('body-parser');
@@ -131,7 +132,7 @@ app.delete('/secret/:id', (req, res) => {
 
 
 //heroku makes its own portnum cant hardcode
-const port = process.env.PORT || 3030;
+
 app.listen(port, () => {
     console.log("User Login Example up and running on port " + port);
 });
