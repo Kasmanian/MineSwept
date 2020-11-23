@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-var PORT = process.env.PORT || 3030;
+var PORT = 'https://mineswept-caves.herokuapp.com/';
+// var PORT = process.env.PORT || 3030;
 var favicon = require('serve-favicon');
 var PATH = require('path');
 
