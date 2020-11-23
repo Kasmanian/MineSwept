@@ -4,7 +4,7 @@ import { gamemodes, blocks, items, audio } from "./data.js";
 var game = new Game(gamemodes[window.localStorage.gamemode]);
 var user = {
     updated: [],
-    display: `../assets/textures/skin.png`,
+    display: `./assets/textures/skin.png`,
     movedto: 'nowhere',
     persistance: false,
     stickbuffer: false,
@@ -47,13 +47,13 @@ const renderBlock = function(coord, mark=false) {
     let display = thespian.currxy!=coord? '' : 
         `<img id="thespian" src="${user.display}" class="user ${user.movedto} ${hurt}" style="max-width: ${.9*s}px; max-height: ${.9*s}px;"></img>`;
     let block = blocks[game.rendered()[coord]].id!=9? blocks[game.rendered()[coord]] : blocks[game.unloaded()[coord]];
-    let item = blocks[game.rendered()[coord]].id!=9? '' : `<img src="../assets/textures/${items[game.dropsmap()[coord]].name}.png" class="item" style="max-width: ${.7*s}px; max-height: ${.7*s}px;"></img>`;
+    let item = blocks[game.rendered()[coord]].id!=9? '' : `<img src="./assets/textures/${items[game.dropsmap()[coord]].name}.png" class="item" style="max-width: ${.7*s}px; max-height: ${.7*s}px;"></img>`;
     let marker = mark? 'marked' : '';
     let img = mark? 'alert' : block.name;
     return `<div id="block" class="${block.name} #${coord}">
                 ${display}
                 ${item}
-                <img id=${coord} src="../assets/textures/${img}.png" class="block ${marker} ${block.name}" style="min-width: ${s}px; min-height: ${s}px;">
+                <img id=${coord} src="./assets/textures/${img}.png" class="block ${marker} ${block.name}" style="min-width: ${s}px; min-height: ${s}px;">
             </div>`;
 }
 
@@ -71,8 +71,8 @@ const renderTool = function(coord, animation=false) {
         scale += `transform: scaleX(-1);`
         aimto = 'aim-left';
     }
-    return `<img id="item_frame" src="../assets/textures/item_frame.png" class="${coord} ${id}" style="max-width: ${s}px; max-height: ${s}px;"></img>
-            <img id=${id} src="../assets/textures/pickax.png" class="${coord} pick ${aimto}" ${scale}"></img>`
+    return `<img id="item_frame" src="./assets/textures/item_frame.png" class="${coord} ${id}" style="max-width: ${s}px; max-height: ${s}px;"></img>
+            <img id=${id} src="./assets/textures/pickax.png" class="${coord} pick ${aimto}" ${scale}"></img>`
 }
 
 const unloadTool = function(id) {
@@ -116,8 +116,8 @@ const renderHearts = function() {
     let element = document.getElementById('health');
     let hearts = ``;
     for (let i=0; i<health; i++) {
-        let heart = thespian.health-i>0? '../assets/textures/heart.png' : '../assets/textures/empty_heart.png';
-        if (thespian.health-i>0&thespian.resist>0) heart = '../assets/textures/cold_heart.png';
+        let heart = thespian.health-i>0? './assets/textures/heart.png' : './assets/textures/empty_heart.png';
+        if (thespian.health-i>0&thespian.resist>0) heart = './assets/textures/cold_heart.png';
         let label = thespian.health-i>0? 'heart' : 'empty';
         hearts+= thespian.health>5&label=='empty'? '' : `<img id="heart_${i}" style="width: ${w/7.5}px; height: ${w/7.5}px;" class=${label} src="${heart}"></img>`;
     }
@@ -299,7 +299,7 @@ const loadBoardIntoDOM = function(game) {
 
 const initialize = function(event) {
     for (let src of Object.keys(audio)) {
-        const sound = new Audio(`../assets/sounds/${src}`);
+        const sound = new Audio(`./assets/sounds/${src}`);
         sound.play().then(()=> {
             sound.pause();
         });

@@ -6,7 +6,7 @@
 }
 
 body {
-    background-image: url(../assets/homepage/wallpaper.jpg);
+    background-image: url(./assets/wallpaper.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -20,7 +20,7 @@ body {
 }
 
 #logo {
-    background-image: url(../assets/homepage/mineswept.png);
+    background-image: url(./assets/mineswept.png);
     background-repeat: no-repeat;
     background-size: 50vw;
     background-position: center;
@@ -63,19 +63,19 @@ button:hover {
 }
 
 #badgesB {
-    background-image: url(../assets/homepage/badges.png);
+    background-image: url(./assets/badges.png);
 }
 
 #easyB {
-    background-image: url(../assets/homepage/easy.jpg);
+    background-image: url(./assets/easy.jpg);
 }
 
 #mediumB {
-    background-image: url(../assets/homepage/medium.png);
+    background-image: url(./assets/medium.png);
 }
 
 #hardB {
-    background-image: url(../assets/homepage/hard.jpg);
+    background-image: url(./assets/hard.jpg);
 }
 
 .easy {
@@ -113,7 +113,7 @@ button:hover {
 }
 
 #scoreDisplay {
-    background-image: url(../assets/homepage/scores.png);
+    background-image: url(./assets/scores.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center top;
