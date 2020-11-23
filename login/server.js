@@ -30,6 +30,10 @@ app.get('/', function(req, res) {
     console.log('gotten');
 });
 
+app.get('/favicon.ico', function(req, res) {
+    res.sendFile('..assets/favicon/facon.ico');
+})
+
 //this checks users
 app.post('/login', (req,res) => {
     //console.log("hiiiiii")
