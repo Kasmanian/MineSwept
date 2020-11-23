@@ -24,16 +24,16 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = `mongodb+srv://KasManian:3p6qmMbuAR7V4is@cluster0.fu4ur.mongodb.net/MineSwept?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-  client.connect(err => {
-});
+//client.connect(err => {
+//});
 
-app.post('/login', (req, res)=> {
+app.post('/login', async (req, res)=> {
+    await client.connect();
     const collection = client.db("MineSweptGames").collection("users");
     let name = req.body.name;
     let pass = req.body.pass;
     let fail = true;
     collection.find({ name: name }).forEach((doc)=> {
-        console.log(doc)
         if (doc.pass==pass) {
             fail = false;
             return;
@@ -41,7 +41,6 @@ app.post('/login', (req, res)=> {
     }).then(()=> {
         if(!fail) {
             res.status(200).send("Logged in: "+name);
-             window.localStorage.PORT = PORT;
         } else res.status(403).send("Unauthorized");
     });
 });

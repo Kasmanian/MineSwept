@@ -123,7 +123,7 @@ async function add(name, password) {
 async function login(data) {
     await axios({
         method: 'post',
-        url: 'login',
+        url: '/login',
         data: {
             name: data.user,
             pass: data.password,
