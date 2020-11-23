@@ -1,1 +1,1 @@
-web: node login/server.js
+web: index
