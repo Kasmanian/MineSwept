@@ -5,7 +5,7 @@ var cors = require('cors')
 const app = express();
 let port = process.env.PORT || 3030;
 // var favicon = require('serve-favicon')
-// var path = require('path')
+var path = require('path')
 app.use(cors());
 // app.use(favicon(path.join('../assets/favicon/favicon.ico')))
 
@@ -24,6 +24,12 @@ app.use(expressSession({
 const Secret = require("./Secret.js").Secret;
 const Score = require("./Secret.js").Score;
 const login_data = require('data-store')({ path: process.cwd() + '/data/secrets.json' });
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname+'index.html'));
+    console.log('gotten');
+});
+
 //this checks users
 app.post('/login', (req,res) => {
     //console.log("hiiiiii")
