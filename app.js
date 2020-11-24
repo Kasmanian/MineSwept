@@ -11,7 +11,6 @@ if (PORT == null || PORT == '') {
 var favicon = require('serve-favicon');
 var crypto = require('crypto');
 var PATH = require('path');
-console.log(PORT)
 
 var cors = require('cors');
 app.use(cors());
@@ -27,7 +26,6 @@ const uri = `mongodb+srv://KasManian:3p6qmMbuAR7V4is@cluster0.fu4ur.mongodb.net/
 const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.post('/login', async (req, res)=> {
-    console.log(req);
     if (!validate(req.body.name)|!validate(req.body.pass)) {
         res.status(400).send('Something went wrong and you were not logged in. Username and password must be at least 6 non-special characters.'); return;
     }
@@ -60,13 +58,10 @@ app.post('/signup', async (req, res)=> {
     let pass = hash.update(req.body.pass+'mscavesv1').digest('hex');
     let fail = false;
     collection.find({}).forEach((doc)=> {
-        console.log(doc.name+": "+name);
-        console.log(doc.name==name);
         if (doc.name==name) {
             fail = true; return;
         }
     }).then(()=> {
-        console.log(fail);
         fail? res.status(400).send("Username already exists.") : collection.insertOne({ name: name, pass: pass});
         fail? undefined : res.status(200).send("Account created.");
     });
@@ -115,12 +110,7 @@ app.post('/finish', async (req, res)=> {
     let mode = req.body.mode;
     let score = req.body.score;
     if (score == undefined) return;
-    collection.updateOne({ name: name, mode: mode, score: score }, { $set: { name: name, mode: mode, score: { $switch: {
-        branches: [
-            { case: { $gt: [ $score, score ]  }, then: $score },
-        ],  
-        default: score
-        } } } }, { upsert: true }).then(()=> {
+    collection.updateOne({ name: name, mode: mode }, { '$max': { score: score } }, { upsert: true }).then(()=> {
     });
     res.status(200).send("Score recorded");
 });

@@ -43,7 +43,6 @@ const renderScoreBoard = function(scores) {
 const updateScoreBoard = function() {
     const result = index(window.localStorage.user);
     result.then((result)=> {
-        window.localStorage.highscores = result;
         let element = document.getElementById('anchor');
         if (element!=null) {
             $(renderScoreBoard(result)).insertAfter(element);
