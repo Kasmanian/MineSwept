@@ -65,9 +65,7 @@ To run locally, install required dependencies listed in package.json, then run t
 <h1>Authors</h1>
 <div>
 •    Justin Bautista 
-
 •    Felimon Holland
-
 •    Kemani Simms
 </div>
 <h1>Website link</h1>
