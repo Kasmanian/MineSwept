@@ -90,14 +90,14 @@ app.get('/score', async (req, res)=> {
     await client.connect();
     const collection = client.db("MineSweptGames").collection("scores");
     let easy = []; let norm = []; let hard = [];
-    collection.find({ mode: 'easy' }).limit(3).sort( { score: 1 }).forEach((doc)=> {
-        easy.unshift(doc);
+    collection.find({ mode: 'easy' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
+        easy.push(doc);
     }).then(()=> {
-        collection.find({ mode: 'norm' }).limit(3).sort( { score: 1 }).forEach((doc)=> {
-            norm.unshift(doc);
+        collection.find({ mode: 'norm' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
+            norm.push(doc);
         }).then(()=> {
-            collection.find({ mode: 'hard' }).limit(3).sort( { score: 1 }).forEach((doc)=> {
-                hard.unshift(doc);
+            collection.find({ mode: 'hard' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
+                hard.push(doc);
             }).then(()=> {
                 res.send({ easy: easy, norm: norm, hard: hard });
             });
