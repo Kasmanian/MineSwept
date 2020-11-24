@@ -1,11 +1,5 @@
 const conv = { easy: 'easy', norm: 'normal', hard: 'hard' }
 
-var dirty_bit = document.getElementById('page_is_dirty');
-if (dirty_bit.value == '1') window.location.reload();
-function mark_page_dirty() {
-    dirty_bit.value = '1';
-}
-
 async function index(user) {
     const result = await axios({
         method: 'get',

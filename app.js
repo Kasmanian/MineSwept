@@ -85,6 +85,7 @@ app.delete('/destroy', async (req, res)=> {
 });
 
 app.get('/score', async (req, res)=> {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     await client.connect();
     const collection = client.db("MineSweptGames").collection("scores");
     let easy = []; let norm = []; let hard = [];

@@ -177,7 +177,7 @@ const handleClickView = function(event) {
 }
 
 const handleClickExit = function(event) {
-    window.history.go(-1);
+    window.location.pathname = './client/index.html';
 }
 
 const handleKeyPressed = function(event) {
