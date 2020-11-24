@@ -1,153 +1,153 @@
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 25vh 50vh 25vh;
+    grid-template-columns: 1fr 1fr .2fr 1fr 1fr 1fr;
+    grid-template-rows: .5fr .5fr .5fr .5fr .5fr .5fr .5fr .5fr;
     grid-gap: 5px
 }
 
 body {
-    background-image: url(./assets/wallpaper.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-image: url(./assets/floor.png);
+    image-rendering: pixelated;
+    font-family: Minecraftia;
 }
 
-.header {
-    grid-column: 1/6;
+#lead {
+    grid-column: 5/7;
     grid-row: 1;
-
-    font-family: 'Times New Roman', Times, serif;
-}
-
-#logo {
-    background-image: url(./assets/mineswept.png);
-    background-repeat: no-repeat;
-    background-size: 50vw;
-    background-position: center;
-
-
-}
-
-.badges {
-    grid-column: 1/2;
-    grid-row: 2;
-    background-color: rgba(0, 128, 0, 0.473);
     display: flex;
+    align-items: center;
     justify-content: center;
-    border-radius: 100px;
+    background: rgba(0,0,0,.3);
+    font-size: 3rem;
+    color: #ffffff;
 }
 
-button {
+#diff button {
+    background-image: url(./assets/stone.png);
     margin: auto;
-    width: 20vw;
-    height: 20vh;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    background-color: rgba(255, 255, 255, 0);
-    border: none;
-    transition: all .2s ease-in-out;
+    cursor: pointer;
+    font-family: Minecraftia !important;
+    font-size: 1.2rem;
+    color: #121a24;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    padding: 1.5vh 0 1.1rem;
+}
+
+#play button {
+    background-color: #008a44;
+    border-top-color: #27ce40;
+    border-right-color: #0c6e3d;
+    border-left-color: #27ce40;
+    border-bottom-color: #064d2a;
+    margin: auto;
+    cursor: pointer;
+    color: #03351c;
+    font-family: Minecraftia !important;
+    font-size: 1.2rem;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    padding: 1.5vh 0 1.1rem;
+    transition: .1s;
 }
 
 button:active,
 button:focus {
     outline: 0;
-    border: none;
     outline-style: none;
     -moz-outline-style: none;
 }
 
-button:hover {
-    transform: scale(1.4);
-    cursor: pointer;
+#diff button:hover {
+    border: solid;
+    border-width: .15rem;
+    border-color: #ffffff;
 }
 
-#easyB {
-    background-image: url(./assets/easy.jpg);
+#play button:hover {
+    transform: scale(1.01, 1.01);
+    color: #ffffff;
 }
 
-#mediumB {
-    background-image: url(./assets/medium.png);
-}
-
-#hardB {
-    background-image: url(./assets/hard.jpg);
-}
-
-.easy {
-    grid-column: 1/2;
-    grid-row: 2;
-    background-color: rgba(255, 255, 0, 0.356);
-    display: flex;
-    justify-content: center;
-    border-radius: 100px;
-}
-
-.medium {
+#logo {
     grid-column: 2/3;
     grid-row: 2;
-    background-color: rgba(255, 166, 0, 0.479);
-    display: flex;
-    justify-content: center;
-    border-radius: 100px;
+    image-rendering: pixelated;
+    height: 8rem;
+    width: 16rem;
 }
 
-.hard {
+#diff {
+    grid-column: 2/3;
+    grid-row: 4;
+    display: flex;
+    justify-content: center;
+    height: 4rem;
+}
+
+#head {
     grid-column: 3/4;
-    grid-row: 2;
-    background-color: rgba(255, 0, 0, 0.445);
+    grid-row: 4;
+    display: flex;
+    width: 3.35rem;
+    height: calc(height);
+    image-rendering: pixelated;
+    border: solid;
+    border-width: .25rem;
+    border-color: #54606e;
+    box-shadow: 0 0 10px #000000;
+    transition: .1s;
+}
+
+#head:hover {
+    transform: scale(1.05, 1.05);
+}
+
+#info {
+    grid-column: 4/5;
+    grid-row: 3/6;
+    background: rgba(0,0,0,.3);
+    border-radius: 1rem;
+    opacity: 0;
+    transition: .2s;
+    padding-left: 1rem;
+    color: #fffd64;
+}
+
+.show {
+    opacity: 1 !important;
+}
+
+#play {
+    grid-column: 2/3;
+    grid-row: 5;
     display: flex;
     justify-content: center;
-    border-radius: 100px;
+    height: 4rem;
 }
 
-.scores {
-    grid-column: 4/6;
-    grid-row: 2/4;
-    background-color: rgb(84, 84, 177);
-    border-radius: 30px;
-}
-
-#scoreDisplay {
-    background-image: url(./assets/scores.png);
-    background-repeat: no-repeat;
-    background-size: 20vw 15vh;
-    background-position: center top;
+.leaderboard {
+    background-image: url(./assets/colder_mafic.png);
+    grid-column: 5/7;
+    grid-row: 2/8;
+    border: solid;
+    border-width: .25rem;
+    image-rendering: pixelated;
+    border-color: #78818d;
+    box-shadow: inset 0 0 10px #000000;
+    height: 30rem;
 }
 
 #list {
-    margin-top: 15vh;
+    margin-top: 7.5vh;
 }
 
 .line {
-    color: white;
-    font-family: Minecraftia;
+    color: #ffffff;
     font-size: 1.5em;
     text-shadow: 1em, 1em, gray;
-    text-align: center;
-}
-
-#title1 {
-    grid-column: 1/2;
-    grid-row: 3;
-    font-size: 50px;
-    color: white;
-    text-align: center;
-}
-
-#title2 {
-    grid-column: 2/3;
-    grid-row: 3;
-    font-size: 50px;
-    color: white;
-    text-align: center;
-}
-
-#title3 {
-    grid-column: 3/4;
-    grid-row: 3;
-    font-size: 50px;
-    color: white;
     text-align: center;
 }
 

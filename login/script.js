@@ -42,7 +42,9 @@ async function add(name, password) {
         }
     }).then(() => {
         $message.html('<span class="has-text-success">Success! Account created.</span>');
-        login({ user: name, password: password });
+        let text = name.split('#');
+        let user = text[0];
+        login({ user: user, password: password });
     }).catch((err) => {
         $message.html(`<span class="has-text-danger">${err.response.data}</span>`);
     });

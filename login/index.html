@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; font-src data: 'self'; style-src 'self' 'unsafe-inline' *">
 
         <title>Login to MineSwept: Caves</title>
 
@@ -16,20 +16,20 @@
         <div id="login">
             <div class="login-card">
                 <div class="card-title">
-                    <h1>MineSwept Login</h1>
+                    <h1><img id="logo" src="./assets/minesweptlogo.png"></img> LOGIN</h1>
                 </div>
 
                 <div class="content">
                     <form id="login-form">
-                        <input id="user" type="user" name="user" title="user" placeholder="Username" required autofocus>
-                        <input id="password" type="password" name="password" title="password" placeholder="Password" required>
+                        <input id="user" type="user" name="user" title="user" placeholder="Username" required autofocus autocomplete="off">
+                        <input id="password" type="password" name="password" title="password" placeholder="Password" required autocomplete="off">
 
                         <div class="field">
-                            <div class="control">
-                                <button type="submit" id="1" class="btn btn-primary" value="log">Login</button>
-                                <button type="submit" id="2" class="btn btn-primary" >Create Account</button>
-                                <button type="submit" id="3" class="btn btn-primary" >Delete Account</button>
-                            </div>
+                                <div class="columns">
+                                    <button type="submit" id="1" class="white column btn btn-primary" value="log">Login</button>
+                                    <button type="submit" id="2" class="white column btn btn-primary" >Signup</button>
+                                </div>
+                                <button type="submit" id="3" class="red btn btn-primary" >Delete Account</button>
                         </div>
 
                         <div class="field">

@@ -1,14 +1,7 @@
 import Game from "./game.js";
 import { gamemodes, blocks, items, audio } from "./data.js";
 
-// async function update(score) {
-//     const result = await axios({
-//         method: 'post',
-//         url: '/finish',
-//         params: { name: window.localStorage.user, mode: window.localStorage.gamemode, score: score },
-//     });
-//     return await result;
-// }
+var size = 0;
 
 var game = new Game(gamemodes[window.localStorage.gamemode]);
 var user = {
@@ -40,8 +33,8 @@ var s = Math.floor(Math.min(window.innerHeight, window.innerWidth)/game.size())-
 
 const renderChunk = function(chunk) {
     let blocks = ``;
-    let render = `"grid-template-columns: repeat(${game.size()}, ${s}px); 
-                      grid-template-rows: repeat(${game.size()}, ${s}px);"`;
+    let render = `"grid-template-columns: repeat(${game.size()}, 1fr); 
+                      grid-template-rows: repeat(${game.size()}, 1fr);"`;
     for(let coord in chunk) { blocks+=renderBlock(coord); }
     return `<section>
                 <div class="container" id="render">
@@ -54,16 +47,33 @@ const renderBlock = function(coord, mark=false) {
     let thespian = game.thespian();
     let hurt = user.healthBuffer? 'hurt' : '';
     let display = thespian.currxy!=coord? '' : 
-        `<img id="thespian" src="${user.display}" class="user ${user.movedto} ${hurt}" style="max-width: ${.9*s}px; max-height: ${.9*s}px;"></img>`;
+        `<img id="thespian" src="${user.display}" class="user ${user.movedto} ${hurt}" style="width: ${.9*size}px; height: ${.9*size}px"></img>`;
     let block = blocks[game.rendered()[coord]].id!=9? blocks[game.rendered()[coord]] : blocks[game.unloaded()[coord]];
-    let item = blocks[game.rendered()[coord]].id!=9? '' : `<img src="./assets/textures/${items[game.dropsmap()[coord]].name}.png" class="item" style="max-width: ${.7*s}px; max-height: ${.7*s}px;"></img>`;
+    let item = blocks[game.rendered()[coord]].id!=9? '' : `<img src="./assets/textures/${items[game.dropsmap()[coord]].name}.png" class="item" style="width: ${.6*size}px; height: ${.6*size}px"></img>`;
     let marker = mark? 'marked' : '';
     let img = mark? 'alert' : block.name;
     return `<div id="block" class="${block.name} #${coord}">
                 ${display}
                 ${item}
-                <img id=${coord} src="./assets/textures/${img}.png" class="block ${marker} ${block.name}" style="min-width: ${s}px; min-height: ${s}px;">
+                <img id=${coord} src="./assets/textures/${img}.png" class="block ${marker} ${block.name}">
             </div>`;
+}
+
+const renderUnloadedChunk = function(chunk) {
+    let divs = '';
+    let render = `"grid-template-columns: repeat(${game.size()}, 1fr); 
+                      grid-template-rows: repeat(${game.size()}, 1fr);"`;
+    for (let coord in chunk) {
+        let block = blocks[game.unloaded()[coord]];
+        divs+=`<div id="block" class="${block.name} #${coord}">
+                        <img id=${coord} src="./assets/textures/${block.name}.png" class="block ${block.name}">
+                </div>`;
+    }
+    return `<section>
+                <div class="container" id="render">
+                    <div class="grid" style=${render}>${divs}</div>
+                </div>
+            </section>`
 }
 
 const reloadBlock = function(coord, mark=false) {
@@ -73,14 +83,14 @@ const reloadBlock = function(coord, mark=false) {
 }
 
 const renderTool = function(coord, animation=false) {
-    let scale = `style="max-width: ${.8*s}px; max-height: ${.8*s}px; `;
+    let scale = `style="max-width: ${.75*size}px; max-height: ${.75*size}px; `;
     let aimto = 'aim-right';
     let id = !animation? 'tool' : 'anmt'
     if (coord-game.thespian().currxy<0) {
         scale += `transform: scaleX(-1);`
         aimto = 'aim-left';
     }
-    return `<img id="item_frame" src="./assets/textures/item_frame.png" class="${coord} ${id}" style="max-width: ${s}px; max-height: ${s}px;"></img>
+    return `<img id="item_frame" src="./assets/textures/item_frame.png" class="${coord} ${id}" style="max-width: ${size}px; max-height: ${size}px;"></img>
             <img id=${id} src="./assets/textures/pickax.png" class="${coord} pick ${aimto}" ${scale}"></img>`
 }
 
@@ -117,8 +127,6 @@ const markBlock = function(coord) {
 }
 
 const renderHearts = function() {
-    let w = (window.innerWidth-(s*game.size()))/2;
-    let style = `style="width: ${w-(.2*w)}px; margin-left: ${.075*w}px;"`;
     let thespian = game.thespian()
     let health = 5;
     if (thespian.health>5) health = thespian.health;
@@ -128,19 +136,17 @@ const renderHearts = function() {
         let heart = thespian.health-i>0? './assets/textures/heart.png' : './assets/textures/empty_heart.png';
         if (thespian.health-i>0&thespian.resist>0) heart = './assets/textures/cold_heart.png';
         let label = thespian.health-i>0? 'heart' : 'empty';
-        hearts+= thespian.health>5&label=='empty'? '' : `<img id="heart_${i}" style="width: ${w/7.5}px; height: ${w/7.5}px;" class=${label} src="${heart}"></img>`;
+        hearts+= thespian.health>5&label=='empty'? '' : `<img id="heart_${i}" class="heart" src=${heart}></img>`;
     }
-    if (element==null) return `<div id="health" ${style}>${hearts}</div>`;
-    $(`<div id="health" ${style}>${hearts}</div>`).insertAfter(element);
+    if (element==null) return `<div id="health">${hearts}</div>`;
+    $(`<div id="health">${hearts}</div>`).insertAfter(element);
     element.remove();
 }
 
 const renderPoints = function() {
-    let w = (window.innerWidth-(s*game.size()))/2;
-    let style = `style="width: ${w-(.2*w)}px; margin-left: ${w+(.075*w)+(s*game.size())}px;"`;
     let element = document.getElementById('score');
-    if (element==null) return `<div id="score" ${style}>${game.score()}</div>`;
-    $(`<div id="score" ${style}>${game.score()}</div>`).insertAfter(element);
+    if (element==null) return `<div id="score">${game.score()}</div>`;
+    $(`<div id="score">${game.score()}</div>`).insertAfter(element);
     element.remove();
 }
 
@@ -170,6 +176,9 @@ const handleGameOver = function(won) {
 }
 
 const handleClickView = function(event) {
+    const $root = $('#root');
+    $($root).empty();
+    $($root).append(renderUnloadedChunk(game.unloaded()));
     const $leaf = $('#leaf');
     $($leaf).empty();
     document.getElementById('root').classList.remove('lose-screen');
@@ -181,6 +190,7 @@ const handleClickExit = function(event) {
 }
 
 const handleKeyPressed = function(event) {
+    if (event.keyCode==27) handleClickExit();
     let coord = game.thespian().currxy+keys.codify(event.keyCode);
     if (document.getElementById(coord)==null) return;
     if (!document.getElementById(coord).classList.contains('marked')) {
@@ -344,14 +354,16 @@ const initialize = function(event) {
     let n = Math.ceil(Math.random()*19);
     handleSound('cave'+n+(n!=19? '.oga' : '.ogg'));
     const coord = parseInt(event.target.id);
+    size = document.getElementById(event.target.id).offsetWidth;
     const $root = $('#root');
+    const $game = $('#game');
     $($root).off('click', '.block', initialize);
     game.load(coord);
     $($root).empty();
     $($root).append(renderChunk(game.rendered()));
     alertBlocks(game.thespian().movexy.filter(x=> game.rendered()[x]==1));
-    $($root).append(renderHearts());
-    $($root).append(renderPoints());
+    $($game).append(renderHearts());
+    $($game).append(renderPoints());
     $($root).on('mousedown', '#item_frame', handleClickBlock);
     $($root).on('mousedown', '.block', handleClickBlock);
     $($root).on('mouseover', '.block', handleHoverAlert);
