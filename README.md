@@ -1,5 +1,5 @@
 # MineSwept
-Base repository for MineSwept games, including MineSwept: Caves and MineSwept: Classic.
+Base repository for MineSwept games, including MineSwept: Caves.
 
 <h1>How to use the app</h1>
 
