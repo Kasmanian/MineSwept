@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 // var PORT = process.env.PORT || 3030;
 var PORT = process.env.PORT;
@@ -21,7 +22,7 @@ app.use(favicon(PATH.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static('login'));
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://KasManian:3p6qmMbuAR7V4is@cluster0.fu4ur.mongodb.net/MineSwept?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.fu4ur.mongodb.net/MineSwept?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
