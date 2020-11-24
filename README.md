@@ -17,7 +17,7 @@ Base repository for MineSwept games, including MineSwept: Caves and MineSwept: C
 </div>
 
 <h1>App features
-
+<div>
 •    Login with premade accounts 
 
 •    Create a new account
@@ -27,19 +27,21 @@ Base repository for MineSwept games, including MineSwept: Caves and MineSwept: C
 •    Competitive multiplayer through online leaderboard 
 
 •    Allows you to play the MineSwept craft game. 
-
+</div>
 <h1>Backend 
 
+<div>
 We store our user and score information on a separate online mongoDB server. We connect to our server by using axios to call another function in our app.js that then sends a mongo query to our databases. We do use 2 json databases for efficiency. With these databases we can make create, post, read, update, and delete whatever information we want. For the purposes, the purposes of our project, we typically create user data, read it, or delete it when needed.
-
+</div>
 
 <h1>How to run locally 
+  <div>
 To run locally, install required dependencies listed in package.json, then run the command 'node app.js'.
-
+</div>
 
 
 <h1>Technologies used: 
-
+<div>
 •    Node.js
 
 •    Bulma
@@ -57,16 +59,18 @@ To run locally, install required dependencies listed in package.json, then run t
 •    Body-parser
 
 •    Data-store
-
+</div>
 
 <h1>Authors
-
+<div>
 •    Justin Bautista 
 
 •    Felimon Holland
 
 •    Kemani Simms
-
+</div>
 <h1>Website link
+  <div>
 •    https://mineswept-caves.herokuapp.com/
 
+</div>
