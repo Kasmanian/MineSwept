@@ -1,7 +1,7 @@
 # MineSwept
 Base repository for MineSwept games, including MineSwept: Caves and MineSwept: Classic.
 
-How to use the app
+<h1>How to use the app
 
 •    First in order to use the app, you have to create an account through the sign in button or if you have an account already simply login. 
 
@@ -15,7 +15,7 @@ How to use the app
 
 •    If you win the game, return home to see if you beat anyone on the global leader board, if not you can try again by starting a new game
 
-App features
+<h1>App features
 
 •    Login with premade accounts 
 
@@ -27,14 +27,15 @@ App features
 
 •    Allows you to play the MineSwept craft game. 
 
-Backend 
+<h1>Backend 
+
 We store our user and score information on a separate online mongoDB server. We connect to our server by using axios to call another function in our app.js that then sends a mongo query to our databases. We do use 2 json databases for efficiency. With these databases we can make create, post, read, update, and delete whatever information we want. For the purposes, the purposes of our project, we typically create user data, read it, or delete it when needed.
 
 How to run locally 
 To run locally, install required dependencies listed in package.json, then run the command 'node app.js'.
 
 
-Technologies used: 
+<h1>Technologies used: 
 
 •    Node.js
 
@@ -54,7 +55,7 @@ Technologies used:
 
 •    Data-store
 
-Authors
+<h1>Authors
 
 •    Justin Bautista 
 
@@ -62,5 +63,5 @@ Authors
 
 •    Kemani Simms
 
-Website link
+<h1>Website link
 •    https://mineswept-caves.herokuapp.com/
