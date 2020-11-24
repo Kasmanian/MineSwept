@@ -73,5 +73,4 @@ To run locally, install required dependencies listed in package.json, then run t
 <h1>Website link</h1>
   <div>
 •    https://mineswept-caves.herokuapp.com/
-
 </div>
