@@ -14,7 +14,7 @@ Base repository for MineSwept games, including MineSwept: Caves and MineSwept: C
 •    Once the board is rendered click anywhere on the grid in order to start the game. Traverse the mine while breaking blocks, taking gems, and avoiding lava
 
 •    If you win the game, return home to see if you beat anyone on the global leader board, if not you can try again by starting a new game
-
+</h1>
 <h1>App features
 
 •    Login with premade accounts 
@@ -26,14 +26,16 @@ Base repository for MineSwept games, including MineSwept: Caves and MineSwept: C
 •    Competitive multiplayer through online leaderboard 
 
 •    Allows you to play the MineSwept craft game. 
-
+</h1>
 <h1>Backend 
 
 We store our user and score information on a separate online mongoDB server. We connect to our server by using axios to call another function in our app.js that then sends a mongo query to our databases. We do use 2 json databases for efficiency. With these databases we can make create, post, read, update, and delete whatever information we want. For the purposes, the purposes of our project, we typically create user data, read it, or delete it when needed.
+</h1>
 
-How to run locally 
+<h1>How to run locally 
 To run locally, install required dependencies listed in package.json, then run the command 'node app.js'.
 
+</h1>
 
 <h1>Technologies used: 
 
@@ -54,6 +56,7 @@ To run locally, install required dependencies listed in package.json, then run t
 •    Body-parser
 
 •    Data-store
+</h1>
 
 <h1>Authors
 
@@ -62,6 +65,7 @@ To run locally, install required dependencies listed in package.json, then run t
 •    Felimon Holland
 
 •    Kemani Simms
-
+</h1>
 <h1>Website link
 •    https://mineswept-caves.herokuapp.com/
+  </h1>
