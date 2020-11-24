@@ -117,9 +117,9 @@ app.post('/finish', async (req, res)=> {
     if (score == undefined) return;
     collection.updateOne({ name: name, mode: mode, score: score }, { $set: { name: name, mode: mode, score: { $switch: {
         branches: [
-            { case: { $lt: [ '$score', score ]  }, then: score },
+            { case: { $gt: [ $score, score ]  }, then: $score },
         ],  
-        default: '$score'
+        default: score
         } } } }, { upsert: true }).then(()=> {
     });
     res.status(200).send("Score recorded");
