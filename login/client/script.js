@@ -1,4 +1,3 @@
-const conv = { easy: 'easy', norm: 'normal', hard: 'hard' }
 const mode = ['easy', 'normal', 'hard'];
 const text = ['Easy', 'Normal', 'Hard'];
 const info = [
@@ -49,7 +48,7 @@ const renderScoreBoard = function(scores) {
     let list = '';
     for (let key of Object.keys(scores)) {
         for (let score of scores[key]) {
-            list+=`<div class="line">${conv[score['mode']]}: <span>${score['name']}</span>...${score['score']}</div>`;
+            list+=`<div class="line">${score['mode']}: <span>${score['name']}</span>...${score['score']}</div>`;
         }
     }
     return `<div id="list">${list}</div>`;
