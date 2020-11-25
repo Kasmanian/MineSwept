@@ -117,7 +117,7 @@ app.get('/score', async (req, res)=> {
         collection.find({ mode: 'easy' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
             easy.push(doc);
         }).then(()=> {
-            collection.find({ mode: 'norm' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
+            collection.find({ mode: 'normal' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
                 norm.push(doc);
             }).then(()=> {
                 collection.find({ mode: 'hard' }).sort({ score: -1 }).limit(3).forEach((doc)=> {
